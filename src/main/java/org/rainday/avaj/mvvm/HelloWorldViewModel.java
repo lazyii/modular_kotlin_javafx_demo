@@ -11,8 +11,6 @@ import javafx.event.EventHandler;
 public class HelloWorldViewModel {
 
     private SimpleStringProperty helloMessage = new SimpleStringProperty("Hello World");
-    private SimpleStringProperty userName = new SimpleStringProperty("");
-
 
     private EventHandler<ActionEvent> buttonHandler = event -> {
         CompletableFuture.supplyAsync(() -> {
@@ -26,7 +24,7 @@ public class HelloWorldViewModel {
             return -100;
         }).thenAcceptAsync(x -> {
             System.out.println(Thread.currentThread().getName());
-            System.out.println(this.getHelloMessage() + "  " + this.getUserName());
+            System.out.println(this.getHelloMessage());
             Platform.runLater(() -> {
                 System.out.println(Thread.currentThread().getName());
                 helloMessage.set(String.valueOf(x));
@@ -43,18 +41,6 @@ public class HelloWorldViewModel {
 
     public void setHelloMessage(String message){
         helloMessage.set(message);
-    }
-
-    public String getUserName() {
-        return userName.get();
-    }
-
-    public SimpleStringProperty userNameProperty() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName.set(userName);
     }
 
     public EventHandler<ActionEvent> getButtonHandler() {

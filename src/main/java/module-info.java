@@ -5,19 +5,16 @@
  */
 module kt.desktop.coroutines {
     requires kotlin.stdlib;
-    //requires kotlinx.coroutines.javafx;
-    //requires kotlinx.coroutines.core.jvm;
+    requires kotlinx.coroutines.core.jvm;
+    requires kotlinx.coroutines.javafx;
 
-    requires javafx.fxml;
     requires javafx.controls;
+    requires javafx.fxml;
     requires javafx.graphics;
-    requires javafx.base;
-    requires java.desktop;
-    requires java.base;
+    requires javafx.web;
 
     exports org.rainday.kt;
     exports org.rainday.avaj.mvvm;
 
     opens org.rainday.avaj.mvvm to javafx.fxml;
-
 }

@@ -1,10 +1,8 @@
-import org.jetbrains.kotlin.ir.backend.js.compile
-
 plugins {
     application
-    kotlin("jvm") version "1.5.0"
+    kotlin("jvm") version "1.5.20"
     id("org.openjfx.javafxplugin") version "0.0.10"
-    id("org.beryx.jlink") version "2.23.8"
+    id("org.beryx.jlink") version "2.24.0"
 }
 
 //val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
@@ -27,18 +25,20 @@ allprojects {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    //implementation("org.jetbrains.kotlinx:kotlinx-coroutines-javafx:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-javafx:1.5.1")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-
-    //components { withModule<ModularKotlinRule>(kotlin("stdlib")) }
 }
 
+// because of this bug(https://youtrack.jetbrains.com/issue/KTIJ-18424),pls use gradlew run in console,instead of execute it in idea.
+// step 1: set JAVA_HOME="C:\Program Files\Java\jdk-16.0.1+9"
+// step 2: gradlew run
 application {
-    applicationName =  "KtDesktopCoroutines"
     mainModule.set("kt.desktop.coroutines")
     mainClass.set("org.rainday.kt.LauncherKt")
+    applicationName =  "KtDesktopCoroutines"
+    applicationDefaultJvmArgs = listOf("--add-reads", "kotlin.stdlib=kotlinx.coroutines.core.jvm")
 }
 
 jlink{
@@ -47,8 +47,6 @@ jlink{
     addExtraDependencies("javafx")
     mergedModule {
         additive = false
-        //uses("java.sql.Driver")
-        //provides("java.sql.Driver").with("org.hsqldb.jdbc.JDBCDriver")
     }
     launcher {
         name = "hello"
@@ -73,12 +71,7 @@ javafx {
     modules("javafx.controls", "javafx.fxml", "javafx.web")
 }
 
-
-
 val JavaVersionCurrent = JavaVersion.VERSION_16
-
-println(":sssss: "+JavaVersionCurrent.majorVersion)
-
 tasks {
     compileJava {
         dependsOn(compileKotlin)

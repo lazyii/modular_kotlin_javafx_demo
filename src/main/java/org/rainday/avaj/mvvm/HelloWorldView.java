@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.rainday.kt.KtHandlers;
 
 public class HelloWorldView implements Initializable {
     @FXML
@@ -25,8 +26,8 @@ public class HelloWorldView implements Initializable {
         viewModel = new HelloWorldViewModel();
 
         helloLabel.textProperty().bindBidirectional(viewModel.helloMessageProperty());
-        userName.textProperty().bindBidirectional(viewModel.userNameProperty());
-        button.setOnAction(viewModel.getButtonHandler());
+        userName.textProperty().bindBidirectional(KtHandlers.INSTANCE.getUserNameProperty());
+        button.setOnAction(KtHandlers.INSTANCE.getButtonHandler11());
 
 
     }
